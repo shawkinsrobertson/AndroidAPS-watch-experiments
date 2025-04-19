@@ -3,6 +3,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    configurations.classpath {
+        resolutionStrategy.eachDependency {
+            if (requested.group == "com.android.tools.build"
+                && requested.name == "gradle"
+            ) {
+                useVersion("8.2.2")
+                because("AGP 8.9.1 is incompatible with this project; pin to 8.2.2")
+            }
+        }
+    }
     repositories {
         google()
         mavenCentral()
